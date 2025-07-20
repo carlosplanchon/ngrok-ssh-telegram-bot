@@ -205,3 +205,11 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# UV Package Manager:
+uv.lock
+
+# User config files:
+bot_token.json
+ngrok_authtoken.json
+users.json

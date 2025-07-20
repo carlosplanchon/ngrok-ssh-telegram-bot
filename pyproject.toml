@@ -1,0 +1,11 @@
+[project]
+name = "ngrok-ssh-telegram-bot"
+version = "0.1.0"
+description = "A Python tool that automatically launches ngrok tunnels and notifies authorized users via Telegram bot with connection details for secure remote SSH access."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "python-telegram-bot==22.2",
+    "trio>=0.29.0",
+    "typer>=0.15.2",
+]
