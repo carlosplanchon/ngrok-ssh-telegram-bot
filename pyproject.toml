@@ -5,7 +5,7 @@ description = "A Python tool that automatically launches ngrok tunnels and notif
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "python-telegram-bot==22.2",
-    "trio>=0.29.0",
-    "typer>=0.15.2",
+    "python-telegram-bot==22.5",
+    "trio>=0.32.0",
+    "typer>=0.21.1",
 ]
