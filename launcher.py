@@ -2,7 +2,7 @@
 
 from subprocess import DEVNULL
 
-import httpx
+import httpx2
 import trio
 
 import json
@@ -57,9 +57,9 @@ async def get_ngrok_public_address() -> None:
     while connection_successful is False:
         result = None
         try:
-            result = httpx.get(url=NGROK_LOCAL_API_URL)
+            result = httpx2.get(url=NGROK_LOCAL_API_URL)
         except Exception as e:
-            print(f"HTTPX Async Client > Exception: {e}")
+            print(f"HTTPX2 Client > Exception: {e}")
             ...
 
         try:

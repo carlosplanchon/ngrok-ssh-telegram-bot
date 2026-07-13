@@ -1,5 +1,7 @@
 # ngrok SSH Telegram Bot
 
+[![CI](https://github.com/carlosplanchon/ngrok-ssh-telegram-bot/actions/workflows/ci.yml/badge.svg)](https://github.com/carlosplanchon/ngrok-ssh-telegram-bot/actions/workflows/ci.yml)
+
 A Python tool that automatically creates secure SSH tunnels using ngrok and sends connection details via Telegram bot notifications.
 
 ![Bot Screenshot](assets/ngrok_ssh_telegram_bot_screenshot_20_jul_2025.jpg)
@@ -13,7 +15,7 @@ Ever needed SSH access to your development machine while away, only to find it's
 - **Async Architecture**: Built with Python's `trio` library for concurrent operations
 - **Secure Authorization**: Only pre-authorized Telegram users receive connection details  
 - **Automatic Tunnel Management**: Handles ngrok tunnel creation and monitoring
-- **Real-time Notifications**: Sends SSH connection info directly to your Telegram chat
+- **On-demand Access Info**: Message the bot `ip` and it replies with the current connection details
 - **Robust Error Handling**: Automatic retry logic for reliable connections
 
 ## Architecture
@@ -36,10 +38,12 @@ Ever needed SSH access to your development machine while away, only to find it's
 
 ### Prerequisites
 
-1. Install ngrok: `sudo snap install ngrok`
-2. Get an [ngrok auth token](https://dashboard.ngrok.com/get-started/your-authtoken)
-3. Create a Telegram bot via [@BotFather](https://t.me/botfather)
-4. Get your Telegram user ID from [@userinfobot](https://t.me/userinfobot)
+1. An SSH server listening on port 22
+2. Install ngrok: `sudo snap install ngrok`
+3. Install [uv](https://docs.astral.sh/uv/)
+4. Get an [ngrok auth token](https://dashboard.ngrok.com/get-started/your-authtoken)
+5. Create a Telegram bot via [@BotFather](https://t.me/botfather)
+6. Get your Telegram user ID from [@userinfobot](https://t.me/userinfobot)
 
 ### Installation
 
@@ -82,25 +86,20 @@ Create these three JSON files in the project root:
 
 1. Start the launcher:
    ```bash
-   python launcher.py
+   uv run launcher.py
    ```
 
 2. The tool will:
    - Launch ngrok tunnel to localhost:22
    - Poll ngrok API for connection details
-   - Send SSH connection info to authorized Telegram users
+   - Start the Telegram bot, which serves the connection details to authorized users
 
 3. Message your bot with `ip` to get connection details.
 
-## Dependencies
+### Running Tests
 
-```toml
-dependencies = [
-    "python-telegram-bot==21.6",
-    "trio>=0.29.0", 
-    "typer>=0.15.2",
-    "httpx"
-]
+```bash
+uv run pytest
 ```
 
 ## Security Considerations
@@ -109,7 +108,7 @@ dependencies = [
 - **User Authorization**: Only pre-defined Telegram users get access info
 - **Temporary Tunnels**: ngrok tunnels are ephemeral
 - **No Permanent Exposure**: SSH isn't permanently exposed to internet
-- **Encrypted Transport**: ngrok provides TLS encryption
+- **Encrypted Transport**: the SSH protocol itself encrypts the session end-to-end
 
 ### ⚠️ Security Notes
 - Use strong SSH key authentication
@@ -130,7 +129,7 @@ The tool uses async Python with `trio` to run two concurrent tasks:
 1. **Launch ngrok process and monitor tunnel**: Creates secure tunnel to localhost:22
 2. **Launch Telegram Bot**: Launch Telegram bot to serve connection details through it.
 
-Once the tunnel is established, the Telegram bot automatically sends connection information to authorized users.
+Once the tunnel is established, authorized users can message the bot `ip` to receive the current connection details.
 
 ## Extending the Tool
 
