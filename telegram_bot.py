@@ -19,7 +19,7 @@ from typing import Any
 app = typer.Typer()
 
 
-def get_allowed_users_ids() -> list[str]:
+def get_allowed_users_ids() -> list[int]:
     with open("users.json", "r") as f:
         users_dict = json.load(f)
 
@@ -35,11 +35,11 @@ def get_bot_token() -> str:
     return token
 
 
-def get_sender_id(update: dict[Any]) -> int:
+def get_sender_id(update: dict[str, Any]) -> int:
     return update["message"]["chat"]["id"]
 
 
-def get_message_text(update: dict[Any]) -> str:
+def get_message_text(update: dict[str, Any]) -> str:
     return update["message"]["text"]
 
 

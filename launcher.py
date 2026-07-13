@@ -40,7 +40,17 @@ async def launch_telegram_bot(host: str, port: int):
     print("Bot launched.")
 
 
-async def get_ngrok_public_address() -> tuple[str, int]:
+def parse_public_url(public_url: str) -> tuple[str, int]:
+    """
+    Parse an ngrok public URL like "tcp://0.tcp.sa.ngrok.io:12345"
+    into (host, port).
+    """
+    address: str = public_url.removeprefix("tcp://")
+    host, port = address.split(":")
+    return host, int(port)
+
+
+async def get_ngrok_public_address() -> None:
     print("Getting NGROK public address...")
 
     connection_successful: bool = False
@@ -57,12 +67,7 @@ async def get_ngrok_public_address() -> tuple[str, int]:
                 json_resp = result.json()
                 print("--- JSON RESP ---")
                 public_url: str = json_resp["tunnels"][0]["public_url"]
-                public_url = public_url.lstrip("tcp://")
-
-                parts = public_url.split(":")
-
-                host: str = parts[0]
-                port: int = int(parts[1])
+                host, port = parse_public_url(public_url)
                 connection_successful = True
         except Exception:
             print("...")
