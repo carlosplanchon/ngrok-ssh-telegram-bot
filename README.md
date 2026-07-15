@@ -1,6 +1,7 @@
 # ngrok SSH Telegram Bot
 
 [![CI](https://github.com/carlosplanchon/ngrok-ssh-telegram-bot/actions/workflows/ci.yml/badge.svg)](https://github.com/carlosplanchon/ngrok-ssh-telegram-bot/actions/workflows/ci.yml)
+[![Python](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fcarlosplanchon%2Fngrok-ssh-telegram-bot%2Fmain%2Fpyproject.toml)](https://github.com/carlosplanchon/ngrok-ssh-telegram-bot/blob/main/pyproject.toml)
 
 A Python tool that automatically creates secure SSH tunnels using ngrok and sends connection details via Telegram bot notifications.
 
